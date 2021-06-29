@@ -1,0 +1,13 @@
+.google-navigation--button {
+    position: absolute;
+    top: 20px;
+    left: -50px;
+    border: 2px black solid;
+    border-radius: 5px;
+    background: white;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 16pt;
+}
