@@ -13,10 +13,20 @@ for (let [i, g] of gs.entries()) {
     h3.insertBefore(cloned, h3.children[0]);
 }
 
-document.body.addEventListener('keypress', function (ev) {
+document.body.addEventListener('keydown', function (ev) {
     if (ev.target.tagName !== 'INPUT') {
         let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
         if (button) {
+            button.classList.add('keydown');
+        }
+    }
+});
+
+document.body.addEventListener('keyup', function (ev) {
+    if (ev.target.tagName !== 'INPUT') {
+        let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
+        if (button) {
+            button.classList.remove('keydown');
             button.click();
         }
     }

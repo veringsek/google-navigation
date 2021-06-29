@@ -11,3 +11,8 @@
     text-align: center;
     font-size: 16pt;
 }
+
+.google-navigation--button.keydown {
+    transform: scale(0.8, 0.8);
+    transition: all 0.1s linear;
+}
