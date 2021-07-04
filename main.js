@@ -1,16 +1,33 @@
-let button = document.createElement('div');
-button.classList.add('google-navigation--button');
+function makeTemplate() {
+    let template = document.createElement('a');
+    template.classList.add('google-navigation--button');
+    globalThis.gnButtonTemplate = template;
+}
 
-let gs = [...document.getElementsByClassName('g')];
-for (let [i, g] of gs.entries()) {
-    let num = i + 1;
+function getClonedButton(key, string) {
+    let cloned = globalThis.gnButtonTemplate.cloneNode();
+    cloned.innerHTML = string ?? key;
+    cloned.classList.add(`google-navigation--button-${key}`);
+    return cloned;
+}
 
-    let cloned = button.cloneNode();
-    cloned.innerHTML = num;
-    cloned.classList.add(`google-navigation--button-${num}`);
+function plantButtons() {
+    let gs = [...document.getElementById('search').getElementsByClassName('g')];
+    for (let [i, g] of gs.entries()) {
+        let num = i + 1;
+        let h3 = g.getElementsByTagName('h3')[0];
+        h3.insertBefore(getClonedButton(num), h3.children[0]);
+    }
 
-    let h3 = g.getElementsByTagName('h3')[0]; 
-    h3.insertBefore(cloned, h3.children[0]);
+    let wikiWholepage = document.getElementsByClassName('kp-wholepage')[0]; 
+    let wikiTitle = [...wikiWholepage.getElementsByTagName('h2')].filter(h2 => h2.offsetParent !== null)[0];
+    let wikiContent = document.getElementById('kp-wp-tab-cont-overview');
+    if (wikiWholepage) {
+        let cloned = getClonedButton('w', 'W');
+        cloned.style.top = '12px';
+        cloned.href = wikiContent.getElementsByTagName('a')[0].href;
+        wikiWholepage.insertBefore(cloned, wikiWholepage.children[1]);
+    }
 }
 
 document.body.addEventListener('keydown', function (ev) {
@@ -31,3 +48,6 @@ document.body.addEventListener('keyup', function (ev) {
         }
     }
 });
+
+makeTemplate();
+plantButtons();
