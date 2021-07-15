@@ -36,8 +36,12 @@ function plantButtons() {
     }
 }
 
+function isCommanding(tagName) {
+    return !(['INPUT', 'TEXTAREA'].includes(tagName)); 
+}
+
 document.body.addEventListener('keydown', function (ev) {
-    if (ev.target.tagName !== 'INPUT') {
+    if (isCommanding(ev.target.tagName)) {
         let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
         if (button) {
             button.classList.add('keydown');
@@ -46,7 +50,7 @@ document.body.addEventListener('keydown', function (ev) {
 });
 
 document.body.addEventListener('keyup', function (ev) {
-    if (ev.target.tagName !== 'INPUT') {
+    if (isCommanding(ev.target.tagName)) {
         let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
         if (button) {
             button.classList.remove('keydown');
