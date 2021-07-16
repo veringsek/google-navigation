@@ -12,24 +12,28 @@ function getClonedButton(key, string) {
 }
 
 function plantButtons() {
-    let gs = [...document.getElementById('search').getElementsByClassName('g')];
-    for (let [i, g] of gs.entries()) {
+    let links = [...document.getElementsByClassName('LC20lb')];
+    // let gs = [...document.getElementById('search').getElementsByClassName('g')];
+    for (let [i, link] of links.entries()) {
+        if (i >= 10) {
+            continue;
+        }
         let num = i;
         let cloned;
         if (num === 0) {
             cloned = getClonedButton('Enter', '⮨');
         } else {
-            cloned = getClonedButton(num); 
+            cloned = getClonedButton(num);
         }
-        let h3 = g.getElementsByTagName('h3')[0];
-        h3.insertBefore(cloned, h3.children[0]);
+        // let h3 = link.getElementsByTagName('h3')[0];
+        link.insertBefore(cloned, link.children[0]);
     }
 
-    let wikiWholepage = document.getElementsByClassName('kp-wholepage')[0]; 
+    let wikiWholepage = document.getElementsByClassName('kp-wholepage')[0];
     // let wikiTitle = [...wikiWholepage.getElementsByTagName('h2')].filter(h2 => h2.offsetParent !== null)[0];
     let wikiContent = document.getElementById('kp-wp-tab-cont-overview');
     if (wikiWholepage) {
-        let cloned = getClonedButton('w', 'W');
+        let cloned = getClonedButton('p', 'P');
         cloned.style.top = '12px';
         cloned.href = wikiContent.getElementsByTagName('a')[0].href;
         wikiWholepage.insertBefore(cloned, wikiWholepage.children[1]);
@@ -37,7 +41,7 @@ function plantButtons() {
 }
 
 function isCommanding(tagName) {
-    return !(['INPUT', 'TEXTAREA'].includes(tagName)); 
+    return !(['INPUT', 'TEXTAREA'].includes(tagName));
 }
 
 document.body.addEventListener('keydown', function (ev) {
