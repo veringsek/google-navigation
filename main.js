@@ -13,24 +13,26 @@ function getClonedButton(key, string) {
 
 function plantButtons() {
     let links = [...document.getElementsByClassName('LC20lb')];
-    // let gs = [...document.getElementById('search').getElementsByClassName('g')];
-    for (let [i, link] of links.entries()) {
-        if (i >= 10) {
+    let num = 0;
+    for (let link of links) {
+        if (isDescendantOf(link, [...document.getElementsByClassName('kno-kp')])) {
             continue;
         }
-        let num = i;
+        if (num >= 10) {
+            continue;
+        }
+        // let num = i;
         let cloned;
         if (num === 0) {
             cloned = getClonedButton('Enter', '⮨');
         } else {
             cloned = getClonedButton(num);
         }
-        // let h3 = link.getElementsByTagName('h3')[0];
         link.insertBefore(cloned, link.children[0]);
+        num += 1;
     }
 
     let wikiWholepage = document.getElementsByClassName('kp-wholepage')[0];
-    // let wikiTitle = [...wikiWholepage.getElementsByTagName('h2')].filter(h2 => h2.offsetParent !== null)[0];
     let wikiContent = document.getElementById('kp-wp-tab-cont-overview');
     if (wikiWholepage) {
         let cloned = getClonedButton('p', 'P');
@@ -42,6 +44,18 @@ function plantButtons() {
 
 function isCommanding(tagName) {
     return !(['INPUT', 'TEXTAREA'].includes(tagName));
+}
+
+function isDescendantOf(element, grandParents) {
+    let node = element;
+    let check = Array.isArray(grandParents) ? node => grandParents.includes(node) : Object.is;
+    while (node) {
+        if (check(node)) {
+            return true;
+        }
+        node = node.parentElement;
+    }
+    return false;
 }
 
 document.body.addEventListener('keydown', function (ev) {
