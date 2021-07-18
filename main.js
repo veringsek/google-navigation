@@ -5,6 +5,11 @@ GoogleNavigation.GN_KEYDOWN_TIMER_DURATION = 1000;
 GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED = 'GN_KEYDOWN_TIMER_CANCELED';
 globalThis.GoogleNavigation = GoogleNavigation;
 
+function colorMode() {
+    document.documentElement.style.setProperty('--google-navigation--stroke-color', window.getComputedStyle(document.body)['color']);
+    document.documentElement.style.setProperty('--google-navigation--background-color', window.getComputedStyle(document.body)['backgroundColor']);
+}
+
 function makeTemplate() {
     let template = document.createElement('a');
     template.classList.add('google-navigation--button');
@@ -105,5 +110,6 @@ document.body.addEventListener('keyup', function (ev) {
 
 globalThis.GoogleNavigation.tmrKeydown = undefined;
 
+colorMode();
 makeTemplate();
 plantButtons();

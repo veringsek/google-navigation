@@ -1,11 +1,16 @@
+:root {
+    --google-navigation--stroke-color: black;
+    --google-navigation--background-color: white;
+}
+
 .google-navigation--button {
     position: absolute;
     top: 20px;
     left: -50px;
-    border: 2px black solid;
+    border: 2px var(--google-navigation--stroke-color) solid;
     border-radius: 5px;
-    background: white;
-    box-shadow: 0px 2px black;
+    background: var(--google-navigation--background-color);
+    box-shadow: 0px 2px var(--google-navigation--stroke-color);
     width: 30px;
     height: 30px;
     line-height: 30px;
