@@ -25,6 +25,14 @@
     transform: scale(0.8, 0.8);
 }
 
+.google-navigation--switch {
+    opacity: 0;
+}
+
+.google-navigation--switch.keydown {
+    opacity: 1;
+}
+
 @keyframes spawn {
     from {
         transform: scale(0, 0);

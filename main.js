@@ -41,6 +41,16 @@ function plantButtons() {
         num += 1;
     }
 
+    let search = document.getElementById('search');
+    if (search) {
+        let cloned = getClonedButton('Control', 'CTRL');
+        cloned.classList.add('google-navigation--switch');
+        cloned.style.left = '-150px';
+        cloned.style.width = '80px';
+        cloned.href = '';
+        search.insertBefore(cloned, search.children[0]);
+    }
+
     let wikiWholepage = document.getElementsByClassName('kp-wholepage')[0];
     let wikiContent = document.getElementById('kp-wp-tab-cont-overview');
     if (wikiWholepage) {
