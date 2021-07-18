@@ -1,6 +1,6 @@
 .google-navigation--button {
     position: absolute;
-    /* top: 20px; */
+    top: 20px;
     left: -50px;
     border: 2px black solid;
     border-radius: 5px;
@@ -12,8 +12,16 @@
     text-align: center;
     font-size: 16pt;
     transition: all 0.1s linear;
+
+    animation: spawn 0.2s;
 }
 
 .google-navigation--button.keydown {
     transform: scale(0.8, 0.8);
+}
+
+@keyframes spawn {
+    from {
+        transform: scale(0, 0);
+    }
 }
