@@ -1,6 +1,6 @@
 .google-navigation--button {
     position: absolute;
-    top: 20px;
+    /* top: 20px; */
     left: -50px;
     border: 2px black solid;
     border-radius: 5px;

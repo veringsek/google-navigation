@@ -21,13 +21,13 @@ function plantButtons() {
         if (num >= 10) {
             continue;
         }
-        // let num = i;
         let cloned;
         if (num === 0) {
             cloned = getClonedButton('Enter', '⮨');
         } else {
             cloned = getClonedButton(num);
         }
+        cloned.style.top = `${link.offsetTop}px`;
         link.insertBefore(cloned, link.children[0]);
         num += 1;
     }
