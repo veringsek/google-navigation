@@ -63,6 +63,11 @@ document.body.addEventListener('keydown', function (ev) {
         let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
         if (button) {
             button.classList.add('keydown');
+            let documentElement = document.documentElement;
+            documentElement.scroll({
+                top: button.getBoundingClientRect().top + documentElement.scrollTop - window.innerHeight / 2,
+                behavior: 'smooth'
+            })
         }
     }
 });
