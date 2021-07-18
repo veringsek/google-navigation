@@ -6,8 +6,14 @@ GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED = 'GN_KEYDOWN_TIMER_CANCELED';
 globalThis.GoogleNavigation = GoogleNavigation;
 
 function colorMode() {
-    document.documentElement.style.setProperty('--google-navigation--stroke-color', window.getComputedStyle(document.body)['color']);
-    document.documentElement.style.setProperty('--google-navigation--background-color', window.getComputedStyle(document.body)['backgroundColor']);
+    document.documentElement.style.setProperty(
+        '--google-navigation--stroke-color',
+        window.getComputedStyle(document.body)['color']
+    );
+    document.documentElement.style.setProperty(
+        '--google-navigation--background-color',
+        window.getComputedStyle(document.body)['backgroundColor']
+    );
 }
 
 function makeTemplate() {
@@ -27,18 +33,9 @@ function plantButtons() {
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
-        if (isDescendantOf(link, [...document.getElementsByClassName('kno-kp')])) {
-            continue;
-        }
-        if (num >= 10) {
-            continue;
-        }
-        let cloned;
-        if (num === 0) {
-            cloned = getClonedButton('Enter', '⮨');
-        } else {
-            cloned = getClonedButton(num);
-        }
+        if (isDescendantOf(link, [...document.getElementsByClassName('kno-kp')])) continue;
+        if (num >= 10) continue;
+        let cloned = num === 0 ? getClonedButton('Enter', '⮨') : getClonedButton(num);
         cloned.style.top = `${link.offsetTop}px`;
         link.insertBefore(cloned, link.children[0]);
         num += 1;
@@ -51,6 +48,23 @@ function plantButtons() {
         cloned.style.top = '12px';
         cloned.href = wikiContent.getElementsByTagName('a')[0].href;
         wikiWholepage.insertBefore(cloned, wikiWholepage.children[1]);
+    }
+
+    let pnprev = document.getElementById('pnprev');
+    if (pnprev) {
+        let cloned = getClonedButton(',', '，');
+        cloned.style.top = '-3px';
+        cloned.style.left = '-40px';
+        pnprev.style.position = 'relative';
+        pnprev.insertBefore(cloned, pnprev.children[0]);
+    }
+    let pnnext = document.getElementById('pnnext');
+    if (pnnext) {
+        let cloned = getClonedButton('.', '‧');
+        cloned.style.top = '-3px';
+        cloned.style.left = 'calc(100% + 5px)';
+        pnnext.style.position = 'relative';
+        pnnext.insertBefore(cloned, pnnext.children[0]);
     }
 }
 
