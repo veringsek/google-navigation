@@ -19,11 +19,30 @@ function colorMode() {
 function makeTemplate() {
     let template = document.createElement('a');
     template.classList.add('google-navigation--button');
+    template.commandKeydown = function () {
+        this.classList.add('keydown');
+        let documentElement = document.documentElement;
+        documentElement.scroll({
+            top: this.getBoundingClientRect().top + documentElement.scrollTop - window.innerHeight / 2,
+            behavior: 'smooth'
+        });
+        globalThis.GoogleNavigation.tmrKeydown = globalThis.setTimeout(() => {
+            globalThis.clearTimeout(globalThis.GoogleNavigation.tmrKeydown);
+            globalThis.GoogleNavigation.tmrKeydown = globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED;
+            this.classList.remove('keydown');
+        }, globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_DURATION);
+    };
+    template.commandKeyup = function () {
+        this.classList.remove('keydown');
+        this.click();
+    };
     globalThis.GoogleNavigation.buttonTemplate = template;
 }
 
 function getClonedButton(key, string) {
     let cloned = globalThis.GoogleNavigation.buttonTemplate.cloneNode();
+    cloned.commandKeydown = globalThis.GoogleNavigation.buttonTemplate.commandKeydown;
+    cloned.commandKeyup = globalThis.GoogleNavigation.buttonTemplate.commandKeyup;
     cloned.innerHTML = string ?? key;
     cloned.classList.add(`google-navigation--button-${key}`);
     return cloned;
@@ -102,17 +121,7 @@ function assignEventListeners() {
         if (isCommanding(ev.target.tagName)) {
             let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
             if (button) {
-                button.classList.add('keydown');
-                let documentElement = document.documentElement;
-                documentElement.scroll({
-                    top: button.getBoundingClientRect().top + documentElement.scrollTop - window.innerHeight / 2,
-                    behavior: 'smooth'
-                });
-                globalThis.GoogleNavigation.tmrKeydown = globalThis.setTimeout(() => {
-                    globalThis.clearTimeout(globalThis.GoogleNavigation.tmrKeydown);
-                    globalThis.GoogleNavigation.tmrKeydown = globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED;
-                    button.classList.remove('keydown');
-                }, globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_DURATION);
+                button.commandKeydown();
             }
         }
     });
@@ -128,8 +137,7 @@ function assignEventListeners() {
         if (isCommanding(ev.target.tagName)) {
             let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
             if (button) {
-                button.classList.remove('keydown');
-                button.click();
+                button.commandKeyup();
             }
         }
     });
