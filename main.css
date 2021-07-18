@@ -11,6 +11,8 @@
     border-radius: 5px;
     background: var(--google-navigation--background-color);
     box-shadow: 0px 2px var(--google-navigation--stroke-color);
+    color: var(--google-navigation--stroke-color) !important;
+    text-decoration: none !important;
     width: 30px;
     height: 30px;
     line-height: 30px;

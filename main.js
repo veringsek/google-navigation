@@ -1,6 +1,8 @@
 let GoogleNavigation = {};
 GoogleNavigation.GN_KEYDOWN_TIMER_DURATION = 1000;
 GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED = 'GN_KEYDOWN_TIMER_CANCELED';
+GoogleNavigation.GN_KEYPRESS_SENSITIVITY = 500;
+GoogleNavigation.GN_KEYPRESS_CANCELED = 'GN_KEYPRESS_CANCELED';
 GoogleNavigation.keydowns = new Set();
 GoogleNavigation.tmrKeydown = undefined;
 globalThis.GoogleNavigation = GoogleNavigation;
@@ -34,7 +36,12 @@ function makeTemplate() {
     };
     template.commandKeyup = function () {
         this.classList.remove('keydown');
-        this.click();
+        if (document.getElementById('google-navigation--switch-Control').keydown) {
+            window.open(this.link, '_blank');
+        } else {
+            // this.click();
+            window.open(this.link);
+        }
     };
     globalThis.GoogleNavigation.buttonTemplate = template;
 }
@@ -56,6 +63,7 @@ function plantButtons() {
         if (num >= 10) continue;
         let cloned = num === 0 ? getClonedButton('Enter', '⮨') : getClonedButton(num);
         cloned.style.top = `${link.offsetTop}px`;
+        cloned.link = link.parentElement.href;
         link.insertBefore(cloned, link.children[0]);
         num += 1;
     }
@@ -63,10 +71,29 @@ function plantButtons() {
     let search = document.getElementById('search');
     if (search) {
         let cloned = getClonedButton('Control', 'CTRL');
+        cloned.id = 'google-navigation--switch-Control';
         cloned.classList.add('google-navigation--switch');
         cloned.style.left = '-150px';
         cloned.style.width = '80px';
         cloned.href = '';
+        cloned.keydown = false;
+        cloned.commandKeydown = function () {
+            this.tmrKeypress = globalThis.setTimeout(() => {
+                this.tmrKeypress = globalThis.GoogleNavigation.GN_KEYPRESS_CANCELED;
+            }, globalThis.GoogleNavigation.GN_KEYPRESS_SENSITIVITY);
+        };
+        cloned.commandKeyup = function () {
+            if (this.tmrKeypress === globalThis.GoogleNavigation.GN_KEYPRESS_CANCELED) {
+                this.tmrKeypress = undefined;
+            } else if (this.tmrKeypress) {
+                this.keydown = !this.keydown;
+                if (this.keydown) {
+                    this.classList.add('keydown');
+                } else {
+                    this.classList.remove('keydown');
+                }
+            }
+        };
         search.insertBefore(cloned, search.children[0]);
     }
 
@@ -75,7 +102,7 @@ function plantButtons() {
     if (wikiWholepage) {
         let cloned = getClonedButton('p', 'P');
         cloned.style.top = '12px';
-        cloned.href = wikiContent.getElementsByTagName('a')[0].href;
+        cloned.link = wikiContent.getElementsByTagName('a')[0].href;
         wikiWholepage.insertBefore(cloned, wikiWholepage.children[1]);
     }
 
@@ -84,6 +111,7 @@ function plantButtons() {
         let cloned = getClonedButton(',', '，');
         cloned.style.top = '-3px';
         cloned.style.left = '-40px';
+        cloned.link = pnprev.href;
         pnprev.style.position = 'relative';
         pnprev.insertBefore(cloned, pnprev.children[0]);
     }
@@ -92,6 +120,7 @@ function plantButtons() {
         let cloned = getClonedButton('.', '‧');
         cloned.style.top = '-3px';
         cloned.style.left = 'calc(100% + 5px)';
+        cloned.link = pnnext.href;
         pnnext.style.position = 'relative';
         pnnext.insertBefore(cloned, pnnext.children[0]);
     }
@@ -128,7 +157,7 @@ function assignEventListeners() {
 
     document.body.addEventListener('keyup', function (ev) {
         globalThis.GoogleNavigation.keydowns.delete(ev.key);
-        if (globalThis.GoogleNavigation.tmrKeydown === globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED || !globalThis.GoogleNavigation.tmrKeydown) {
+        if (globalThis.GoogleNavigation.tmrKeydown === globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED) {
             globalThis.GoogleNavigation.tmrKeydown = undefined;
             return;
         }
