@@ -1,11 +1,18 @@
+// console.log("Google Navigation Dev Mode");
+
+let GoogleNavigation = {};
+GoogleNavigation.GN_KEYDOWN_TIMER_DURATION = 1000;
+GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED = 'GN_KEYDOWN_TIMER_CANCELED';
+globalThis.GoogleNavigation = GoogleNavigation;
+
 function makeTemplate() {
     let template = document.createElement('a');
     template.classList.add('google-navigation--button');
-    globalThis.gnButtonTemplate = template;
+    globalThis.GoogleNavigation.buttonTemplate = template;
 }
 
 function getClonedButton(key, string) {
-    let cloned = globalThis.gnButtonTemplate.cloneNode();
+    let cloned = globalThis.GoogleNavigation.buttonTemplate.cloneNode();
     cloned.innerHTML = string ?? key;
     cloned.classList.add(`google-navigation--button-${key}`);
     return cloned;
@@ -59,6 +66,8 @@ function isDescendantOf(element, grandParents) {
 }
 
 document.body.addEventListener('keydown', function (ev) {
+    if (globalThis.GoogleNavigation.keydown) return;
+    globalThis.GoogleNavigation.keydown = true;
     if (isCommanding(ev.target.tagName)) {
         let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
         if (button) {
@@ -67,12 +76,24 @@ document.body.addEventListener('keydown', function (ev) {
             documentElement.scroll({
                 top: button.getBoundingClientRect().top + documentElement.scrollTop - window.innerHeight / 2,
                 behavior: 'smooth'
-            })
+            });
+            globalThis.GoogleNavigation.tmrKeydown = globalThis.setTimeout(() => {
+                globalThis.clearTimeout(globalThis.GoogleNavigation.tmrKeydown);
+                globalThis.GoogleNavigation.tmrKeydown = globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED;
+                button.classList.remove('keydown');
+            }, globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_DURATION);
         }
     }
 });
 
 document.body.addEventListener('keyup', function (ev) {
+    globalThis.GoogleNavigation.keydown = false;
+    if (globalThis.GoogleNavigation.tmrKeydown === globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED || !globalThis.GoogleNavigation.tmrKeydown) {
+        globalThis.GoogleNavigation.tmrKeydown = undefined;
+        return;
+    }
+    globalThis.clearTimeout(globalThis.GoogleNavigation.tmrKeydown);
+    globalThis.GoogleNavigation.tmrKeydown = undefined;
     if (isCommanding(ev.target.tagName)) {
         let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
         if (button) {
@@ -81,6 +102,8 @@ document.body.addEventListener('keyup', function (ev) {
         }
     }
 });
+
+globalThis.GoogleNavigation.tmrKeydown = undefined;
 
 makeTemplate();
 plantButtons();
