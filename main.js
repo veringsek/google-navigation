@@ -128,3 +128,4 @@ function assignEventListeners() {
 colorMode();
 makeTemplate();
 plantButtons();
+assignEventListeners();
