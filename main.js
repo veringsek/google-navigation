@@ -85,8 +85,8 @@ function isDescendantOf(element, grandParents) {
 }
 
 document.body.addEventListener('keydown', function (ev) {
-    if (globalThis.GoogleNavigation.keydown) return;
-    globalThis.GoogleNavigation.keydown = true;
+    if (globalThis.GoogleNavigation.keydowns.has(ev.key)) return;
+    globalThis.GoogleNavigation.keydowns.add(ev.key);
     if (isCommanding(ev.target.tagName)) {
         let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
         if (button) {
@@ -106,7 +106,7 @@ document.body.addEventListener('keydown', function (ev) {
 });
 
 document.body.addEventListener('keyup', function (ev) {
-    globalThis.GoogleNavigation.keydown = false;
+    globalThis.GoogleNavigation.keydowns.delete(ev.key);
     if (globalThis.GoogleNavigation.tmrKeydown === globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED || !globalThis.GoogleNavigation.tmrKeydown) {
         globalThis.GoogleNavigation.tmrKeydown = undefined;
         return;
@@ -122,6 +122,7 @@ document.body.addEventListener('keyup', function (ev) {
     }
 });
 
+globalThis.GoogleNavigation.keydowns = new Set();
 globalThis.GoogleNavigation.tmrKeydown = undefined;
 
 colorMode();
