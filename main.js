@@ -39,8 +39,7 @@ function makeTemplate() {
         if (document.getElementById('google-navigation--switch-Control').keydown) {
             window.open(this.link, '_blank');
         } else {
-            // this.click();
-            window.open(this.link);
+            window.open(this.link, '_self');
         }
     };
     globalThis.GoogleNavigation.buttonTemplate = template;
@@ -75,6 +74,7 @@ function plantButtons() {
         cloned.classList.add('google-navigation--switch');
         cloned.style.left = '-150px';
         cloned.style.width = '80px';
+        cloned.style.fontWeight = 'bold';
         cloned.href = '';
         cloned.keydown = false;
         cloned.commandKeydown = function () {
