@@ -104,12 +104,12 @@ function plantButtons() {
         search.insertBefore(cloned, search.children[0]);
     }
 
-    let wikiWholepage = document.getElementsByClassName('kp-wholepage')[0];
-    let wikiContent = document.getElementById('kp-wp-tab-cont-overview');
-    if (wikiWholepage) {
-        let cloned = getClonedButton(['p', 'P'], wikiContent.getElementsByTagName('a')[0].href);
+    let kpwholepage = document.getElementsByClassName('kp-wholepage')[0];
+    let hrefWiki = document.getElementById('kp-wp-tab-cont-overview')?.getElementsByTagName('a')[0]?.href;
+    if (kpwholepage && /^https?:\/\/[^\.]+\.wikipedia\.org.*/.test(hrefWiki)) {
+        let cloned = getClonedButton(['p', 'P'], hrefWiki);
         cloned.style.top = '12px';
-        wikiWholepage.insertBefore(cloned, wikiWholepage.children[1]);
+        kpwholepage.insertBefore(cloned, kpwholepage.children[1]);
     }
 
     let pnprev = document.getElementById('pnprev');
