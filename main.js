@@ -108,6 +108,7 @@ function plantButtons() {
     if (btnWiki) {
         let cloned = getClonedButton(['p', 'P'], btnWiki.href);
         let card = getWidgetParent(btnWiki);
+        card.style.position = 'relative';
         card.insertBefore(cloned, card.children[0]);
     }
 
