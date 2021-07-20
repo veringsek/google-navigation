@@ -18,6 +18,7 @@
     line-height: 30px;
     text-align: center;
     font-size: 16pt;
+    user-select: none;
     transition: all 0.1s linear;
 
     animation: spawn 0.2s;
