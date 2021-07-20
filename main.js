@@ -104,12 +104,11 @@ function plantButtons() {
         search.insertBefore(cloned, search.children[0]);
     }
 
-    let kpwholepage = document.getElementsByClassName('kp-wholepage')[0];
-    let hrefWiki = document.getElementById('kp-wp-tab-cont-overview')?.getElementsByTagName('a')[0]?.href;
-    if (kpwholepage && /^https?:\/\/[^\.]+\.wikipedia\.org.*/.test(hrefWiki)) {
-        let cloned = getClonedButton(['p', 'P'], hrefWiki);
-        cloned.style.top = '12px';
-        kpwholepage.insertBefore(cloned, kpwholepage.children[1]);
+    let btnWiki = document.getElementsByClassName('ruhjFe')[0];
+    if (btnWiki) {
+        let cloned = getClonedButton(['p', 'P'], btnWiki.href);
+        let card = getWidgetParent(btnWiki);
+        card.insertBefore(cloned, card.children[0]);
     }
 
     let pnprev = document.getElementById('pnprev');
@@ -146,6 +145,18 @@ function isDescendantOf(element, grandParents) {
     return false;
 }
 
+function getWidgetParent(element) {
+    let node = element;
+    do {
+        let computedStyle = globalThis.getComputedStyle(node);
+        let borderWidth = computedStyle.borderWidth;
+        if (borderWidth !== '' && !(/^0\D*/.test(borderWidth))) {
+            return node;
+        }
+        node = node.parentElement;
+    } while (node !== document.body);
+    return null;
+}
 
 function assignEventListeners() {
     document.body.addEventListener('keydown', function (ev) {
