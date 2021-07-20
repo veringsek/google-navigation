@@ -45,12 +45,20 @@ function makeTemplate() {
     globalThis.GoogleNavigation.buttonTemplate = template;
 }
 
-function getClonedButton(key, string) {
+function getClonedButton(key, link) {
+    let string = key;
+    if (Array.isArray(key)) {
+        [key, string] = key;
+    }
     let cloned = globalThis.GoogleNavigation.buttonTemplate.cloneNode();
     cloned.commandKeydown = globalThis.GoogleNavigation.buttonTemplate.commandKeydown;
     cloned.commandKeyup = globalThis.GoogleNavigation.buttonTemplate.commandKeyup;
-    cloned.innerHTML = string ?? key;
+    cloned.innerHTML = string;
     cloned.classList.add(`google-navigation--button-${key}`);
+    if (link) {
+        cloned.link = link;
+        cloned.setAttribute('link', link);
+    }
     return cloned;
 }
 
@@ -60,22 +68,21 @@ function plantButtons() {
     for (let link of links) {
         if (isDescendantOf(link, [...document.getElementsByClassName('kno-kp')])) continue;
         if (num >= 10) continue;
-        let cloned = num === 0 ? getClonedButton('Enter', '⮨') : getClonedButton(num);
+        let href = link.parentElement.href;
+        let cloned = num === 0 ? getClonedButton(['Enter', '⮨'], href) : getClonedButton(num, href);
         cloned.style.top = `${link.offsetTop}px`;
-        cloned.link = link.parentElement.href;
         link.insertBefore(cloned, link.children[0]);
         num += 1;
     }
 
     let search = document.getElementById('search');
     if (search) {
-        let cloned = getClonedButton('Control', 'CTRL');
+        let cloned = getClonedButton(['Control', 'CTRL']);
         cloned.id = 'google-navigation--switch-Control';
         cloned.classList.add('google-navigation--switch');
         cloned.style.left = '-150px';
         cloned.style.width = '80px';
         cloned.style.fontWeight = 'bold';
-        cloned.href = '';
         cloned.keydown = false;
         cloned.commandKeydown = function () {
             this.tmrKeypress = globalThis.setTimeout(() => {
@@ -100,27 +107,24 @@ function plantButtons() {
     let wikiWholepage = document.getElementsByClassName('kp-wholepage')[0];
     let wikiContent = document.getElementById('kp-wp-tab-cont-overview');
     if (wikiWholepage) {
-        let cloned = getClonedButton('p', 'P');
+        let cloned = getClonedButton(['p', 'P'], wikiContent.getElementsByTagName('a')[0].href);
         cloned.style.top = '12px';
-        cloned.link = wikiContent.getElementsByTagName('a')[0].href;
         wikiWholepage.insertBefore(cloned, wikiWholepage.children[1]);
     }
 
     let pnprev = document.getElementById('pnprev');
     if (pnprev) {
-        let cloned = getClonedButton(',', '，');
+        let cloned = getClonedButton([',', '，'], pnprev.href);
         cloned.style.top = '-3px';
         cloned.style.left = '-40px';
-        cloned.link = pnprev.href;
         pnprev.style.position = 'relative';
         pnprev.insertBefore(cloned, pnprev.children[0]);
     }
     let pnnext = document.getElementById('pnnext');
     if (pnnext) {
-        let cloned = getClonedButton('.', '‧');
+        let cloned = getClonedButton(['.', '‧'], pnnext.href);
         cloned.style.top = '-3px';
         cloned.style.left = 'calc(100% + 5px)';
-        cloned.link = pnnext.href;
         pnnext.style.position = 'relative';
         pnnext.insertBefore(cloned, pnnext.children[0]);
     }
