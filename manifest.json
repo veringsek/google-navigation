@@ -12,6 +12,9 @@
     "action": {
         "default_icon": "imgs/icon-16x16.png"
     },
+    "background": {
+        "service_worker": "background.js"
+    },
     "content_scripts": [
         {
             "run_at": "document_idle",
