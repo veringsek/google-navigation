@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Google Navigation",
-    "description": "An Edge extension with a set of hotkeys to navigate through Google Search. ",
-    "version": "0.0.4",
+    "description": "An Microsoft Edge extension with a set of hotkeys to navigate through Google Search. ",
+    "version": "0.0.5",
     "icons": {
         "16": "imgs/icon-16x16.png",
         "32": "imgs/icon-32x32.png",
