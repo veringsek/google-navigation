@@ -1,5 +1,5 @@
 <div align="center">
-<img src="icon.svg" alt="icon" width = "100" />
+<img src="imgs/icon.svg" alt="icon" width = "100" />
 
 # Google Navigation
 
