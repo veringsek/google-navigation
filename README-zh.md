@@ -9,6 +9,10 @@
 </div>
 Google 快覽是一個微軟 Edge 瀏覽器的擴充功能，為 Google 搜尋結果頁面添加快速瀏覽用的快捷鍵。
 
+## 安裝
+
+本擴充功能可以在[Microsoft Edge 外掛程式](https://microsoftedge.microsoft.com/addons/detail/google-navigation/cllaejhffgokphkbkfobhjbbojjlbfdl)頁面取得。
+
 ## 用法
 
 大部分由 Google 快覽加入到 Google 搜尋結果頁面的快捷鍵都會直接以圖示提示，按下圖示上指定的按鍵後，頁面會自動滾動到對應的搜尋結果，放開後即開啟該搜尋結果的連結。長按不放可以取消。

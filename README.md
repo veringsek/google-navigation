@@ -10,6 +10,10 @@ English
 
 Google Navigation is a Microsoft Edge extension which brings a set of hotkeys for users to navigate through Google Search page.
 
+## Install
+
+Get this extension on [Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/google-navigation/cllaejhffgokphkbkfobhjbbojjlbfdl).
+
 ## Usage
 
 In general, hotkeys added by this extension can be recognized by their corresponding icons. When the key is down, the page will scroll to where the result locates, and the result link will be opened when the key is up. To cancel an action, you can keep the key down for a period until the icon bounce back.
