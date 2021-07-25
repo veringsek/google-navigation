@@ -130,8 +130,8 @@ function plantButtons() {
     }
 }
 
-function isCommanding(tagName) {
-    return !(['INPUT', 'TEXTAREA'].includes(tagName));
+function isCommanding(target) {
+    return !(['INPUT', 'TEXTAREA'].includes(target.tagName) || target.classList.contains('jlkklc'));
 }
 
 function isDescendantOf(element, grandParents) {
@@ -163,7 +163,7 @@ function assignEventListeners() {
     document.body.addEventListener('keydown', function (ev) {
         if (globalThis.GoogleNavigation.keydowns.has(ev.key)) return;
         globalThis.GoogleNavigation.keydowns.add(ev.key);
-        if (isCommanding(ev.target.tagName)) {
+        if (isCommanding(ev.target)) {
             let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
             if (button) {
                 button.commandKeydown();
@@ -179,7 +179,7 @@ function assignEventListeners() {
         }
         globalThis.clearTimeout(globalThis.GoogleNavigation.tmrKeydown);
         globalThis.GoogleNavigation.tmrKeydown = undefined;
-        if (isCommanding(ev.target.tagName)) {
+        if (isCommanding(ev.target)) {
             let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
             if (button) {
                 button.commandKeyup();
