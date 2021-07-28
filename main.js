@@ -66,7 +66,7 @@ function plantButtons() {
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
-        if (isDescendantOf(link, [...document.getElementsByClassName('kno-kp')])) continue;
+        if (isDescendantOf(link, [...document.getElementsByClassName('ULSxyf')])) continue;
         if (num >= 10) continue;
         let href = link.parentElement.href;
         let cloned = num === 0 ? getClonedButton(['Enter', '⮨'], href) : getClonedButton(num, href);
