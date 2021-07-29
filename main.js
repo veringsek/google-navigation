@@ -66,7 +66,7 @@ function plantButtons() {
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
-        if (isDescendantOf(link, [...document.getElementsByClassName('ULSxyf')])) continue;
+        if (getCollapseSectionParent(link)) continue;
         if (num >= 10) continue;
         let href = link.parentElement.href;
         let cloned = num === 0 ? getClonedButton(['Enter', '⮨'], href) : getClonedButton(num, href);
@@ -153,6 +153,19 @@ function getWidgetParent(element) {
         let borderWidth = computedStyle.borderWidth;
         if (borderWidth !== '' && !(/^0\D*/.test(borderWidth))) {
             return node;
+        }
+        node = node.parentElement;
+    } while (node !== document.body);
+    return null;
+}
+
+function getCollapseSectionParent(element) {
+    let node = element;
+    do {
+        if (node.children.length > 0) {
+            let computedStyle = globalThis.getComputedStyle(node.children[0]);
+            let borderWidth = computedStyle.borderWidth;
+            if (borderWidth === '1px 0px 0px') return node;
         }
         node = node.parentElement;
     } while (node !== document.body);
