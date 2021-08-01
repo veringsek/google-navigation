@@ -35,15 +35,22 @@ function makeTemplate() {
             globalThis.clearTimeout(globalThis.GoogleNavigation.tmrKeydown);
             globalThis.GoogleNavigation.tmrKeydown = globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED;
             this.classList.remove('keydown');
+            this.commandCancel();
         }, globalThis.GoogleNavigation.GN_KEYDOWN_TIMER_DURATION);
     };
     template.commandKeyup = function () {
         this.classList.remove('keydown');
+        this.commandPress();
+    };
+    template.commandPress = function () {
         if (document.getElementById('google-navigation--switch-Control').keydown) {
             window.open(this.link, '_blank');
         } else {
             window.open(this.link, '_self');
         }
+    };
+    template.commandCancel = function () {
+        return;
     };
     globalThis.GoogleNavigation.buttonTemplate = template;
 }
@@ -56,6 +63,8 @@ function getClonedButton(key, link) {
     let cloned = globalThis.GoogleNavigation.buttonTemplate.cloneNode();
     cloned.commandKeydown = globalThis.GoogleNavigation.buttonTemplate.commandKeydown;
     cloned.commandKeyup = globalThis.GoogleNavigation.buttonTemplate.commandKeyup;
+    cloned.commandPress = globalThis.GoogleNavigation.buttonTemplate.commandPress;
+    cloned.commandCancel = globalThis.GoogleNavigation.buttonTemplate.commandCancel;
     cloned.innerHTML = string;
     cloned.classList.add(`google-navigation--button-${key}`);
     if (link) {
@@ -117,13 +126,16 @@ function plantButtons() {
 
     let translatorWidgetMain = document.getElementById('tw-main');
     let translatorWidgetSourceTextTA = document.getElementById('tw-source-text-ta');
-    if (translatorWidgetMain) {
+    if (translatorWidgetMain && translatorWidgetSourceTextTA) {
         let cloned = getClonedButton(['t', 'T']);
         let rectMain = translatorWidgetMain.getBoundingClientRect();
         let rectText = translatorWidgetSourceTextTA.getBoundingClientRect();
         let top = (rectText.bottom + rectText.top) / 2 - rectMain.top
             - parseFloat(cssVar('--google-navigation--button-size')) / 2;
         cloned.style.top = `${top}px`;
+        cloned.commandPress = function () {
+            document.getElementById('tw-source-text-ta').focus();
+        };
         translatorWidgetMain.style.position = 'relative';
         translatorWidgetMain.insertBefore(cloned, translatorWidgetMain.children[0]);
     }
