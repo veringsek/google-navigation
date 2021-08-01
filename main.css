@@ -2,6 +2,7 @@
     --google-navigation--button-size: 30px;
     --google-navigation--stroke-color: black;
     --google-navigation--background-color: white;
+    --google-navigation--button-opacity: 1;
 }
 
 .google-navigation--button {
@@ -12,6 +13,7 @@
     background: var(--google-navigation--background-color);
     box-shadow: 0px 2px var(--google-navigation--stroke-color);
     color: var(--google-navigation--stroke-color) !important;
+    opacity: var(--google-navigation--button-opacity);
     text-decoration: none !important;
     width: var(--google-navigation--button-size);
     height: var(--google-navigation--button-size);

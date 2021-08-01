@@ -168,21 +168,10 @@ function plantButtons() {
     }
 }
 
-function isCommanding(target) {
+function isCommanding() {
+    let target = document.activeElement;
     return !(['INPUT', 'TEXTAREA'].includes(target.tagName) || target.classList.contains('jlkklc'));
 }
-
-// function isDescendantOf(element, grandParents) {
-//     let node = element;
-//     let check = Array.isArray(grandParents) ? node => grandParents.includes(node) : Object.is;
-//     while (node) {
-//         if (check(node)) {
-//             return true;
-//         }
-//         node = node.parentElement;
-//     }
-//     return false;
-// }
 
 function cssVar(name) {
     return globalThis.getComputedStyle(document.documentElement).getPropertyValue(name);
@@ -215,10 +204,19 @@ function getCollapseSectionParent(element) {
 }
 
 function assignEventListeners() {
+    let onFocusChanged = function (ev) {
+        document.documentElement.style.setProperty(
+            '--google-navigation--button-opacity',
+            isCommanding() ? 1 : 0.5
+        );
+    };
+    window.addEventListener('focus', onFocusChanged, true);
+    window.addEventListener('blur', onFocusChanged, true);
+
     document.body.addEventListener('keydown', function (ev) {
         if (globalThis.GoogleNavigation.keydowns.has(ev.key)) return;
         globalThis.GoogleNavigation.keydowns.add(ev.key);
-        if (isCommanding(ev.target)) {
+        if (isCommanding()) {
             let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
             if (button) {
                 button.commandKeydown();
@@ -234,7 +232,7 @@ function assignEventListeners() {
         }
         globalThis.clearTimeout(globalThis.GoogleNavigation.tmrKeydown);
         globalThis.GoogleNavigation.tmrKeydown = undefined;
-        if (isCommanding(ev.target)) {
+        if (isCommanding()) {
             let button = document.getElementsByClassName(`google-navigation--button-${ev.key}`)[0];
             if (button) {
                 button.commandKeyup();
