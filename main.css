@@ -1,23 +1,23 @@
 :root {
+    --google-navigation--button-size: 30px;
     --google-navigation--stroke-color: black;
     --google-navigation--background-color: white;
 }
 
 .google-navigation--button {
     position: absolute;
-    top: 20px;
-    left: -50px;
+    left: calc(-5 / 3 * var(--google-navigation--button-size));
     border: 2px var(--google-navigation--stroke-color) solid;
     border-radius: 5px;
     background: var(--google-navigation--background-color);
     box-shadow: 0px 2px var(--google-navigation--stroke-color);
     color: var(--google-navigation--stroke-color) !important;
     text-decoration: none !important;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: var(--google-navigation--button-size);
+    height: var(--google-navigation--button-size);
+    line-height: var(--google-navigation--button-size);
     text-align: center;
-    font-size: 16pt;
+    font-size: calc(2 / 3 * var(--google-navigation--button-size));
     user-select: none;
     transition: all 0.1s linear;
 
@@ -25,7 +25,7 @@
 }
 
 .google-navigation--button.keydown {
-    transform: scale(0.8, 0.8);
+    transform: scale(0.8);
 }
 
 .google-navigation--switch {
@@ -38,6 +38,6 @@
 
 @keyframes spawn {
     from {
-        transform: scale(0, 0);
+        transform: scale(0);
     }
 }

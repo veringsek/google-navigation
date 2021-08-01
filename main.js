@@ -1,3 +1,6 @@
+let timeStart = Date.now();
+console.log(`Google Navigation start at ${new Date()}`);
+
 let GoogleNavigation = {};
 GoogleNavigation.GN_KEYDOWN_TIMER_DURATION = 1000;
 GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED = 'GN_KEYDOWN_TIMER_CANCELED';
@@ -10,11 +13,11 @@ globalThis.GoogleNavigation = GoogleNavigation;
 function colorMode() {
     document.documentElement.style.setProperty(
         '--google-navigation--stroke-color',
-        window.getComputedStyle(document.body)['color']
+        globalThis.getComputedStyle(document.body)['color']
     );
     document.documentElement.style.setProperty(
         '--google-navigation--background-color',
-        window.getComputedStyle(document.body)['backgroundColor']
+        globalThis.getComputedStyle(document.body)['backgroundColor']
     );
 }
 
@@ -112,6 +115,29 @@ function plantButtons() {
         card.insertBefore(cloned, card.children[0]);
     }
 
+    let translatorWidgetMain = document.getElementById('tw-main');
+    let translatorWidgetSourceTextTA = document.getElementById('tw-source-text-ta');
+    if (translatorWidgetMain) {
+        let cloned = getClonedButton(['t', 'T']);
+        let rectMain = translatorWidgetMain.getBoundingClientRect();
+        let rectText = translatorWidgetSourceTextTA.getBoundingClientRect();
+        let top = (rectText.bottom + rectText.top) / 2 - rectMain.top
+            - parseFloat(cssVar('--google-navigation--button-size')) / 2;
+        cloned.style.top = `${top}px`;
+        translatorWidgetMain.style.position = 'relative';
+        translatorWidgetMain.insertBefore(cloned, translatorWidgetMain.children[0]);
+    }
+
+    // let currentPage = document.getElementById('top_nav')?.querySelector('[aria-current=page]');
+    // if (currentPage) {
+    //     let nav = currentPage.parentElement;
+    //     let next = currentPage.nextSibling;
+    //     if (!next) next = nav.children[0];
+    //     let cloned = getClonedButton(['n', 'N'], next.getElementsByTagName('a')[0]?.href);
+    //     cloned.style.left = '130px';
+    //     nav.insertBefore(cloned, nav.children[0]);
+    // }
+
     let pnprev = document.getElementById('pnprev');
     if (pnprev) {
         let cloned = getClonedButton([',', '，'], pnprev.href);
@@ -134,16 +160,20 @@ function isCommanding(target) {
     return !(['INPUT', 'TEXTAREA'].includes(target.tagName) || target.classList.contains('jlkklc'));
 }
 
-function isDescendantOf(element, grandParents) {
-    let node = element;
-    let check = Array.isArray(grandParents) ? node => grandParents.includes(node) : Object.is;
-    while (node) {
-        if (check(node)) {
-            return true;
-        }
-        node = node.parentElement;
-    }
-    return false;
+// function isDescendantOf(element, grandParents) {
+//     let node = element;
+//     let check = Array.isArray(grandParents) ? node => grandParents.includes(node) : Object.is;
+//     while (node) {
+//         if (check(node)) {
+//             return true;
+//         }
+//         node = node.parentElement;
+//     }
+//     return false;
+// }
+
+function cssVar(name) {
+    return globalThis.getComputedStyle(document.documentElement).getPropertyValue(name);
 }
 
 function getWidgetParent(element) {
@@ -205,3 +235,6 @@ colorMode();
 makeTemplate();
 plantButtons();
 assignEventListeners();
+
+console.log(`Google Navigation end at ${new Date()}`);
+console.log(`Google Navigation consumed ${Date.now() - timeStart} ms. `);
