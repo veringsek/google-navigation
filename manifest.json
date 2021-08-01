@@ -1,8 +1,9 @@
 {
     "manifest_version": 3,
-    "name": "Google Navigation",
-    "description": "An Microsoft Edge extension with a set of hotkeys to navigate through Google Search. ",
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
     "version": "0.0.5",
+    "default_locale": "en",
     "icons": {
         "16": "imgs/icon-16x16.png",
         "32": "imgs/icon-32x32.png",
