@@ -26,7 +26,7 @@ Press <kbd>.</kbd> for next page; <kbd>,</kbd> for previous page.
 
 <kbd>T</kbd> to get focus to the translator widget.
 
-When <kbd>CTRL</kbd> is pressed, an icon will show up in press-down status, after that, all links will be oponed in new tab, until this mode is deactivated by pressing <kbd>CTRL</kbd> again. 
+When <kbd>CTRL</kbd> is pressed, an icon will show up in press-down status, after that, all links will be opened in new tab, until this mode is deactivated by pressing <kbd>CTRL</kbd> again. 
 
 ## Principle
 

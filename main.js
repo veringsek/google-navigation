@@ -6,11 +6,16 @@ GoogleNavigation.GN_KEYDOWN_TIMER_DURATION = 1000;
 GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED = 'GN_KEYDOWN_TIMER_CANCELED';
 GoogleNavigation.GN_KEYPRESS_SENSITIVITY = 500;
 GoogleNavigation.GN_KEYPRESS_CANCELED = 'GN_KEYPRESS_CANCELED';
+GoogleNavigation.GN_BUTTON_SIZE = 30;
 GoogleNavigation.keydowns = new Set();
 GoogleNavigation.tmrKeydown = undefined;
 globalThis.GoogleNavigation = GoogleNavigation;
 
-function colorMode() {
+function setCSSVars() {
+    document.documentElement.style.setProperty(
+        '--google-navigation--button-size',
+        `${globalThis.GoogleNavigation.GN_BUTTON_SIZE}px`
+    );
     document.documentElement.style.setProperty(
         '--google-navigation--stroke-color',
         globalThis.getComputedStyle(document.body)['color']
@@ -75,6 +80,7 @@ function getClonedButton(key, link) {
 }
 
 function plantButtons() {
+    let buttonSizeHalf = globalThis.GoogleNavigation.GN_BUTTON_SIZE / 2;
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
@@ -82,7 +88,8 @@ function plantButtons() {
         if (num >= 10) continue;
         let href = link.parentElement.href;
         let cloned = num === 0 ? getClonedButton(['Enter', '⮨'], href) : getClonedButton(num, href);
-        cloned.style.top = `${link.offsetTop}px`;
+        console.log(cloned.clientHeight);
+        cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - buttonSizeHalf}px`;
         link.insertBefore(cloned, link.children[0]);
         num += 1;
     }
@@ -241,7 +248,7 @@ function assignEventListeners() {
     });
 }
 
-colorMode();
+setCSSVars();
 makeTemplate();
 plantButtons();
 assignEventListeners();
