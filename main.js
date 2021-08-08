@@ -87,7 +87,13 @@ function plantButtons() {
         if (getCollapseSectionParent(link)) continue;
         if (num >= 10) continue;
         let href = link.parentElement.href;
-        let cloned = num === 0 ? getClonedButton(['Enter', '⮨'], href) : getClonedButton(num, href);
+        let cloned;
+        if (num === 0) {
+            cloned = getClonedButton(['Enter', '⮨'], href);
+            cloned.classList.add('google-navigation--button-0');
+        } else {
+            cloned = getClonedButton(num, href);
+        }
         cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - GoogleNavigation.GN_BUTTON_SIZE_HALF}px`;
         link.insertBefore(cloned, link.children[0]);
         num += 1;
