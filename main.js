@@ -137,13 +137,24 @@ function plantButtons() {
         let rectMain = translatorWidgetMain.getBoundingClientRect();
         let rectText = translatorWidgetSourceTextTA.getBoundingClientRect();
         let top = (rectText.bottom + rectText.top) / 2 - rectMain.top - GoogleNavigation.GN_BUTTON_SIZE_HALF;
-            // - parseFloat(cssVar('--google-navigation--button-size')) / 2;
         cloned.style.top = `${top}px`;
         cloned.commandPress = function () {
             document.getElementById('tw-source-text-ta').focus();
         };
         translatorWidgetMain.style.position = 'relative';
         translatorWidgetMain.insertBefore(cloned, translatorWidgetMain.children[0]);
+    }
+
+    let calculatorWidget = document.getElementById('cwos')?.parentElement?.parentElement;
+    if (calculatorWidget) {
+        let calculatorWidgetParent = getWidgetParent(calculatorWidget);
+        let cloned = getClonedButton(['t', 'T']);
+        let top = calculatorWidgetParent.clientHeight / 2 - globalThis.GoogleNavigation.GN_BUTTON_SIZE_HALF;
+        cloned.style.top = `${top}px`;
+        cloned.commandPress = function () {
+            document.getElementById('cwos').parentElement.parentElement.focus();
+        };
+        calculatorWidgetParent.insertBefore(cloned, calculatorWidgetParent.children[0]);
     }
 
     // let currentPage = document.getElementById('top_nav')?.querySelector('[aria-current=page]');
