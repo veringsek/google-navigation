@@ -7,6 +7,7 @@ GoogleNavigation.GN_KEYDOWN_TIMER_CANCELED = 'GN_KEYDOWN_TIMER_CANCELED';
 GoogleNavigation.GN_KEYPRESS_SENSITIVITY = 500;
 GoogleNavigation.GN_KEYPRESS_CANCELED = 'GN_KEYPRESS_CANCELED';
 GoogleNavigation.GN_BUTTON_SIZE = 30;
+GoogleNavigation.GN_BUTTON_SIZE_HALF = GoogleNavigation.GN_BUTTON_SIZE / 2;
 GoogleNavigation.keydowns = new Set();
 GoogleNavigation.tmrKeydown = undefined;
 globalThis.GoogleNavigation = GoogleNavigation;
@@ -80,7 +81,6 @@ function getClonedButton(key, link) {
 }
 
 function plantButtons() {
-    let buttonSizeHalf = globalThis.GoogleNavigation.GN_BUTTON_SIZE / 2;
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
@@ -88,8 +88,7 @@ function plantButtons() {
         if (num >= 10) continue;
         let href = link.parentElement.href;
         let cloned = num === 0 ? getClonedButton(['Enter', '⮨'], href) : getClonedButton(num, href);
-        console.log(cloned.clientHeight);
-        cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - buttonSizeHalf}px`;
+        cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - GoogleNavigation.GN_BUTTON_SIZE_HALF}px`;
         link.insertBefore(cloned, link.children[0]);
         num += 1;
     }
@@ -137,8 +136,8 @@ function plantButtons() {
         let cloned = getClonedButton(['t', 'T']);
         let rectMain = translatorWidgetMain.getBoundingClientRect();
         let rectText = translatorWidgetSourceTextTA.getBoundingClientRect();
-        let top = (rectText.bottom + rectText.top) / 2 - rectMain.top
-            - parseFloat(cssVar('--google-navigation--button-size')) / 2;
+        let top = (rectText.bottom + rectText.top) / 2 - rectMain.top - GoogleNavigation.GN_BUTTON_SIZE_HALF;
+            // - parseFloat(cssVar('--google-navigation--button-size')) / 2;
         cloned.style.top = `${top}px`;
         cloned.commandPress = function () {
             document.getElementById('tw-source-text-ta').focus();
