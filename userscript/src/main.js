@@ -383,7 +383,7 @@
 // @match       https://*.google.cat/search*
 // @grant       none
 // @version     0.2.0
-// @author      -
+// @author      veringsek
 // @description [object Object]
 // ==/UserScript==
 
