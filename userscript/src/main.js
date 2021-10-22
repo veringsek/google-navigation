@@ -391,51 +391,51 @@
     let css = document.createElement('style');
     css.type = 'text/css';
     css.innerText = `
-    :root {
-    --google-navigation--button-size: 30px;
-    --google-navigation--stroke-color: black;
-    --google-navigation--background-color: white;
-    --google-navigation--button-opacity: 1;
-}
-
-.google-navigation--button {
-    position: absolute;
-    left: calc(-5 / 3 * var(--google-navigation--button-size));
-    border: 2px var(--google-navigation--stroke-color) solid;
-    border-radius: 5px;
-    background: var(--google-navigation--background-color);
-    box-shadow: 0px 2px var(--google-navigation--stroke-color);
-    color: var(--google-navigation--stroke-color) !important;
-    opacity: var(--google-navigation--button-opacity);
-    text-decoration: none !important;
-    width: var(--google-navigation--button-size);
-    height: var(--google-navigation--button-size);
-    line-height: var(--google-navigation--button-size);
-    text-align: center;
-    font-size: calc(2 / 3 * var(--google-navigation--button-size));
-    user-select: none;
-    transition: all 0.1s linear;
-
-    animation: spawn 0.2s;
-}
-
-.google-navigation--button.keydown {
-    transform: scale(0.8);
-}
-
-.google-navigation--switch {
-    opacity: 0;
-}
-
-.google-navigation--switch.keydown {
-    opacity: 1;
-}
-
-@keyframes spawn {
-    from {
-        transform: scale(0);
-    }
-}
+        :root {
+            --google-navigation--button-size: 30px;
+            --google-navigation--stroke-color: black;
+            --google-navigation--background-color: white;
+            --google-navigation--button-opacity: 1;
+        }
+        
+        .google-navigation--button {
+            position: absolute;
+            left: calc(-5 / 3 * var(--google-navigation--button-size));
+            border: 2px var(--google-navigation--stroke-color) solid;
+            border-radius: 5px;
+            background: var(--google-navigation--background-color);
+            box-shadow: 0px 2px var(--google-navigation--stroke-color);
+            color: var(--google-navigation--stroke-color) !important;
+            opacity: var(--google-navigation--button-opacity);
+            text-decoration: none !important;
+            width: var(--google-navigation--button-size);
+            height: var(--google-navigation--button-size);
+            line-height: var(--google-navigation--button-size);
+            text-align: center;
+            font-size: calc(2 / 3 * var(--google-navigation--button-size));
+            user-select: none;
+            transition: all 0.1s linear;
+        
+            animation: spawn 0.2s;
+        }
+        
+        .google-navigation--button.keydown {
+            transform: scale(0.8);
+        }
+        
+        .google-navigation--switch {
+            opacity: 0;
+        }
+        
+        .google-navigation--switch.keydown {
+            opacity: 1;
+        }
+        
+        @keyframes spawn {
+            from {
+                transform: scale(0);
+            }
+        }
     `;
     document.head.appendChild(css);
 })();

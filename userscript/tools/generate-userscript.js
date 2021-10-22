@@ -30,10 +30,11 @@ ${
     let css = document.createElement('style');
     css.type = 'text/css';
     css.innerText = \`
-    ${css}
+${css.split('\n').map(line => `        ${line}`).join('\n')}
     \`;
     document.head.appendChild(css);
 })();
 
 ${js}`;
 fs.writeFileSync(pathUserscript, userscript);
+// console.log(userscript)
