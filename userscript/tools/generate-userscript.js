@@ -13,7 +13,7 @@ let messages = JSON.parse(fs.readFileSync(pathChromiumMessages, 'utf-8'));
 let css = fs.readFileSync(pathChromiumCss, 'utf-8');
 let js = fs.readFileSync(pathChromiumJs, 'utf-8');
 let userscript = `// ==UserScript==
-// @name        ${messages.appName}
+// @name        ${messages.appName.message}
 // @namespace   veringsek
 ${
     manifest.content_scripts[0].matches
@@ -23,7 +23,7 @@ ${
 // @grant       none
 // @version     ${manifest.version}
 // @author      veringsek
-// @description ${messages.appDesc}
+// @description ${messages.appDesc.message}
 // ==/UserScript==
 
 (function () {

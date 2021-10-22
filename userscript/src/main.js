@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        [object Object]
+// @name        Google Navigation
 // @namespace   veringsek
 // @match       http://*.google.com/search*
 // @match       http://*.google.ad/search*
@@ -384,7 +384,7 @@
 // @grant       none
 // @version     0.2.0
 // @author      veringsek
-// @description [object Object]
+// @description Navigate through Google Search with a set of hotkeys. 
 // ==/UserScript==
 
 (function () {
