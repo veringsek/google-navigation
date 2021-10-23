@@ -15,19 +15,21 @@ let zh = JSON.parse(fs.readFileSync(pathChromiumMessagesZH, 'utf-8'));
 let css = fs.readFileSync(pathChromiumCss, 'utf-8');
 let js = fs.readFileSync(pathChromiumJs, 'utf-8');
 let userscript = `// ==UserScript==
-// @name            ${en.appName.message}
-// @name:zh         ${zh.appName.message}
-// @namespace       veringsek
+// @name                ${en.appName.message}
+// @name:zh-TW          ${zh.appName.message}
+// @name:zh-CN          ${zh.appName.message}
+// @namespace           veringsek
 ${
     manifest.content_scripts[0].matches
-    .map(match => `// @match           ${match}`)
+    .map(match => `// @match               ${match}`)
     .join('\n')
 }
-// @grant           none
-// @version         ${manifest.version}
-// @author          veringsek
-// @description     ${en.appDesc.message}
-// @description:zh  ${zh.appDesc.message}
+// @grant               none
+// @version             ${manifest.version}
+// @author              veringsek
+// @description         ${en.appDesc.message}
+// @description:zh-TW   ${zh.appDesc.message}
+// @description:zh-CN   ${zh.appDesc.message}
 // ==/UserScript==
 
 (function () {
