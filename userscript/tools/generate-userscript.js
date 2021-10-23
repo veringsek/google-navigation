@@ -37,4 +37,3 @@ ${css.split('\n').map(line => `        ${line}`).join('\n')}
 
 ${js}`;
 fs.writeFileSync(pathUserscript, userscript);
-// console.log(userscript)
