@@ -20,7 +20,7 @@ Get this userscript on [Greasy Fork](https://greasyfork.org/en/scripts/434327-go
 
 In general, hotkeys added by this extension can be recognized by their corresponding icons. When the key is down, the page will scroll to where the result locates, and the result link will be opened when the key is up. To cancel an action, you can keep the key down for a period until the icon bounce back.
 
-For general search results, the first will be assigned with <kbd>⮨</kbd> Enter key, and <kbd>1</kbd> to <kbd>9</kbd> for the following results.
+For general search results, use <kbd>0</kbd> to <kbd>9</kbd>. The first will be assigned with <kbd>⮨</kbd> Enter key when no element is focused.
 
 Press <kbd>.</kbd> for next page; <kbd>,</kbd> for previous page. 
 
