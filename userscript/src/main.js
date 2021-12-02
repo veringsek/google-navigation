@@ -384,7 +384,7 @@
 // @match               https://*.google.co.zw/search*
 // @match               https://*.google.cat/search*
 // @grant               none
-// @version             0.2.0
+// @version             0.3.0
 // @author              veringsek
 // @description         Navigate through Google Search with a set of hotkeys. 
 // @description:zh-TW   在 Google 搜尋結果頁面利用快捷鍵進行快速瀏覽。
@@ -443,9 +443,6 @@
     `;
     document.head.appendChild(css);
 })();
-
-let timeStart = Date.now();
-console.log(`Google Navigation start at ${new Date()}`);
 
 let GoogleNavigation = {};
 GoogleNavigation.GN_KEYDOWN_TIMER_DURATION = 1000;
@@ -534,14 +531,10 @@ function plantButtons() {
         if (num >= 10) continue;
         let href = link.parentElement.href;
         let cloned;
-        if (num === 0) {
-            cloned = getClonedButton(['Enter', '⮨'], href);
-            cloned.classList.add('google-navigation--button-0');
-        } else {
-            cloned = getClonedButton(num, href);
-        }
+        cloned = getClonedButton(num, href);
         cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - GoogleNavigation.GN_BUTTON_SIZE_HALF}px`;
         link.insertBefore(cloned, link.children[0]);
+        setButtonEnter(document.activeElement === document.body);
         num += 1;
     }
 
@@ -609,16 +602,6 @@ function plantButtons() {
         calculatorWidgetParent.insertBefore(cloned, calculatorWidgetParent.children[0]);
     }
 
-    // let currentPage = document.getElementById('top_nav')?.querySelector('[aria-current=page]');
-    // if (currentPage) {
-    //     let nav = currentPage.parentElement;
-    //     let next = currentPage.nextSibling;
-    //     if (!next) next = nav.children[0];
-    //     let cloned = getClonedButton(['n', 'N'], next.getElementsByTagName('a')[0]?.href);
-    //     cloned.style.left = '130px';
-    //     nav.insertBefore(cloned, nav.children[0]);
-    // }
-
     let pnprev = document.getElementById('pnprev');
     if (pnprev) {
         let cloned = getClonedButton([',', '，'], pnprev.href);
@@ -678,6 +661,7 @@ function assignEventListeners() {
             '--google-navigation--button-opacity',
             isCommanding() ? 1 : 0.5
         );
+        setButtonEnter(document.activeElement === document.body);
     };
     window.addEventListener('focus', onFocusChanged, true);
     window.addEventListener('blur', onFocusChanged, true);
@@ -710,10 +694,18 @@ function assignEventListeners() {
     });
 }
 
+function setButtonEnter(enabled) {
+    let btn0 = document.getElementsByClassName('google-navigation--button-0')[0];
+    if (enabled) {
+        btn0.innerHTML = '⮨';
+        btn0.classList.add('google-navigation--button-Enter');
+    } else {
+        btn0.innerHTML = '0';
+        btn0.classList.remove('google-navigation--button-Enter');
+    }
+}
+
 setCSSVars();
 makeTemplate();
 plantButtons();
 assignEventListeners();
-
-console.log(`Google Navigation end at ${new Date()}`);
-console.log(`Google Navigation consumed ${Date.now() - timeStart} ms. `);
