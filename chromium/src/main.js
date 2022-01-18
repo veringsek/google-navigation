@@ -47,7 +47,7 @@ function makeTemplate() {
     };
     template.commandPress = function () {
         if (document.getElementById('google-navigation--switch-Control').keydown) {
-            window.open(this.link, '_blank');
+            window.open(this.link, '_blank'); // should change to use native click event
         } else {
             window.open(this.link, '_self');
         }
@@ -78,6 +78,7 @@ function getClonedButton(key, link) {
 }
 
 function plantButtons() {
+    let search = document.getElementById('search');
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
@@ -88,11 +89,24 @@ function plantButtons() {
         cloned = getClonedButton(num, href);
         cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - GoogleNavigation.GN_BUTTON_SIZE_HALF}px`;
         link.insertBefore(cloned, link.children[0]);
+
+        // A quick patch for #1
+        let node = link;
+        do {
+            let style = window.getComputedStyle(node);
+            if (style['overflow'] === 'hidden') {
+                node.style.overflow = 'visible';
+            }
+            if (style['contain'] === 'layout paint') {
+                node.style.contain = 'unset';
+            }
+            node = node.parentElement;
+        } while (node !== search);
+        
         setButtonEnter(document.activeElement === document.body);
         num += 1;
     }
 
-    let search = document.getElementById('search');
     if (search) {
         let cloned = getClonedButton(['Control', 'CTRL']);
         cloned.id = 'google-navigation--switch-Control';
