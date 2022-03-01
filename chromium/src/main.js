@@ -79,6 +79,7 @@ function getClonedButton(key, link) {
 
 function plantButtons() {
     let search = document.getElementById('search');
+    let rcnt = document.getElementById('rcnt');
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
@@ -92,7 +93,12 @@ function plantButtons() {
 
         // A quick patch for #1
         let node = link;
+        let notInRcnt = false;
         do {
+            if (!(node instanceof Element)) {
+                notInRcnt = true;
+                break;
+            }
             let style = window.getComputedStyle(node);
             if (style['overflow'] === 'hidden') {
                 node.style.overflow = 'visible';
@@ -101,7 +107,8 @@ function plantButtons() {
                 node.style.contain = 'unset';
             }
             node = node.parentElement;
-        } while (node !== search);
+        } while (node !== rcnt);
+        if (notInRcnt) continue;
         
         setButtonEnter(document.activeElement === document.body);
         num += 1;
