@@ -91,7 +91,6 @@ function plantButtons() {
         cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - GoogleNavigation.GN_BUTTON_SIZE_HALF}px`;
         link.insertBefore(cloned, link.children[0]);
 
-        // A quick patch for #1
         let node = link;
         let notInRcnt = false;
         do {
