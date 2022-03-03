@@ -27,6 +27,8 @@
 }
 
 .google-navigation--button.keydown {
+    background: var(--google-navigation--stroke-color);
+    color: var(--google-navigation--background-color) !important;
     transform: scale(0.8);
 }
 

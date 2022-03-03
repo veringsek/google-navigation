@@ -47,9 +47,9 @@ function makeTemplate() {
     };
     template.commandPress = function () {
         if (document.getElementById('google-navigation--switch-Control').keydown) {
-            window.open(this.link, '_blank'); // should change to use native click event
+            window.open(this.link, '_blank');
         } else {
-            window.open(this.link, '_self');
+            this.click();
         }
     };
     template.commandCancel = function () {
