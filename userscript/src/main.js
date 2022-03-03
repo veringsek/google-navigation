@@ -384,7 +384,7 @@
 // @match               https://*.google.co.zw/search*
 // @match               https://*.google.cat/search*
 // @grant               none
-// @version             0.3.1
+// @version             0.3.3
 // @author              veringsek
 // @description         Navigate through Google Search with a set of hotkeys. 
 // @description:zh-TW   在 Google 搜尋結果頁面利用快捷鍵進行快速瀏覽。
@@ -424,6 +424,8 @@
         }
         
         .google-navigation--button.keydown {
+            background: var(--google-navigation--stroke-color);
+            color: var(--google-navigation--background-color) !important;
             transform: scale(0.8);
         }
         
@@ -493,9 +495,9 @@ function makeTemplate() {
     };
     template.commandPress = function () {
         if (document.getElementById('google-navigation--switch-Control').keydown) {
-            window.open(this.link, '_blank'); // should change to use native click event
+            window.open(this.link, '_blank');
         } else {
-            window.open(this.link, '_self');
+            this.click();
         }
     };
     template.commandCancel = function () {
@@ -525,6 +527,7 @@ function getClonedButton(key, link) {
 
 function plantButtons() {
     let search = document.getElementById('search');
+    let rcnt = document.getElementById('rcnt');
     let links = [...document.getElementsByClassName('LC20lb')];
     let num = 0;
     for (let link of links) {
@@ -536,9 +539,13 @@ function plantButtons() {
         cloned.style.top = `${link.offsetTop + link.clientHeight / 2 - GoogleNavigation.GN_BUTTON_SIZE_HALF}px`;
         link.insertBefore(cloned, link.children[0]);
 
-        // A quick patch for #1
         let node = link;
+        let notInRcnt = false;
         do {
+            if (!(node instanceof Element)) {
+                notInRcnt = true;
+                break;
+            }
             let style = window.getComputedStyle(node);
             if (style['overflow'] === 'hidden') {
                 node.style.overflow = 'visible';
@@ -547,7 +554,8 @@ function plantButtons() {
                 node.style.contain = 'unset';
             }
             node = node.parentElement;
-        } while (node !== search);
+        } while (node !== rcnt);
+        if (notInRcnt) continue;
         
         setButtonEnter(document.activeElement === document.body);
         num += 1;
