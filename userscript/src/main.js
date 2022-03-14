@@ -384,7 +384,7 @@
 // @match               https://*.google.co.zw/search*
 // @match               https://*.google.cat/search*
 // @grant               none
-// @version             0.3.3
+// @version             0.3.4
 // @author              veringsek
 // @description         Navigate through Google Search with a set of hotkeys. 
 // @description:zh-TW   在 Google 搜尋結果頁面利用快捷鍵進行快速瀏覽。
@@ -497,7 +497,7 @@ function makeTemplate() {
         if (document.getElementById('google-navigation--switch-Control').keydown) {
             window.open(this.link, '_blank');
         } else {
-            this.click();
+            window.open(this.link, '_self');
         }
     };
     template.commandCancel = function () {
