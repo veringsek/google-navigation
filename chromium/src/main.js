@@ -49,7 +49,7 @@ function makeTemplate() {
         if (document.getElementById('google-navigation--switch-Control').keydown) {
             window.open(this.link, '_blank');
         } else {
-            this.click();
+            window.open(this.link, '_self');
         }
     };
     template.commandCancel = function () {
