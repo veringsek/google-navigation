@@ -12,6 +12,8 @@ Google Navigation is a Microsoft Edge extension which brings a set of hotkeys fo
 
 ## Install
 
+Get this extension on [Chrome Web Store](https://chrome.google.com/webstore/detail/google-navigation/kcaeenlnabomianhofhmkaeaddkfcndm)
+
 Get this extension on [Microsoft Edge Addons](https://microsoftedge.microsoft.com/addons/detail/google-navigation/cllaejhffgokphkbkfobhjbbojjlbfdl).
 
 Get this userscript on [Greasy Fork](https://greasyfork.org/en/scripts/434327-google-navigation).

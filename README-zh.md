@@ -11,6 +11,8 @@ Google 快覽是一個微軟 Edge 瀏覽器的擴充功能，為 Google 搜尋�
 
 ## 安裝
 
+本擴充功能可以在 [Chrome 線上應用程式商店](https://chrome.google.com/webstore/detail/google-navigation/kcaeenlnabomianhofhmkaeaddkfcndm) 頁面取得。
+
 本擴充功能可以在 [Microsoft Edge 外掛程式](https://microsoftedge.microsoft.com/addons/detail/google-navigation/cllaejhffgokphkbkfobhjbbojjlbfdl) 頁面取得。
 
 本用戶腳本可以在 [Greasy Fork](https://greasyfork.org/zh-TW/scripts/434327-google-navigation) 中取得。
