@@ -145,6 +145,10 @@ function plantButtons() {
     if (btnWiki) {
         let cloned = getClonedButton(['p', 'P'], btnWiki.href);
         let card = getWidgetParent(btnWiki);
+        if (!card) {
+            card = document.getElementById('rhs');
+            cloned.style.left = `calc(2 / 3 * var(--google-navigation--button-size) + 100%)`;
+        }
         card.style.position = 'relative';
         card.insertBefore(cloned, card.children[0]);
     }
