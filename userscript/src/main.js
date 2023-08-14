@@ -532,7 +532,7 @@ function plantButtons() {
     let num = 0;
     for (let link of links) {
         if (getCollapseSectionParent(link)) continue;
-        if (num >= 10) continue;
+        if (num >= 10) break;
         let href = link.parentElement.href;
         let cloned;
         cloned = getClonedButton(num, href);
@@ -593,6 +593,10 @@ function plantButtons() {
     if (btnWiki) {
         let cloned = getClonedButton(['p', 'P'], btnWiki.href);
         let card = getWidgetParent(btnWiki);
+        if (!card) {
+            card = document.getElementById('rhs');
+            cloned.style.left = `calc(2 / 3 * var(--google-navigation--button-size) + 100%)`;
+        }
         card.style.position = 'relative';
         card.insertBefore(cloned, card.children[0]);
     }
@@ -651,30 +655,25 @@ function cssVar(name) {
     return globalThis.getComputedStyle(document.documentElement).getPropertyValue(name);
 }
 
-function getWidgetParent(element) {
+function getParent(element, condition) {
     let node = element;
     do {
-        let computedStyle = globalThis.getComputedStyle(node);
-        let borderWidth = computedStyle.borderWidth;
-        if (borderWidth !== '' && !(/^0\D*/.test(borderWidth))) {
-            return node;
-        }
+        if (condition(node)) return node;
         node = node.parentElement;
     } while (node !== document.body);
     return null;
 }
 
+function getWidgetParent(element) {
+    return getParent(element, node => {
+        let computedStyle = globalThis.getComputedStyle(node);
+        let borderWidth = computedStyle.borderWidth;
+        return borderWidth !== '' && !(/^0\D*/.test(borderWidth));
+    });
+}
+
 function getCollapseSectionParent(element) {
-    let node = element;
-    do {
-        if (node.children.length > 0) {
-            let computedStyle = globalThis.getComputedStyle(node.children[0]);
-            let borderWidth = computedStyle.borderWidth;
-            if (borderWidth === '1px 0px 0px') return node;
-        }
-        node = node.parentElement;
-    } while (node !== document.body);
-    return null;
+    return getParent(element, node => node.getAttribute('jscontroller') === 'Da4hkd');
 }
 
 function assignEventListeners() {
